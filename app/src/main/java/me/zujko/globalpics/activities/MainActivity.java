@@ -1,9 +1,11 @@
-package me.zujko.globalpics;
+package me.zujko.globalpics.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import me.zujko.globalpics.R;
 
 public class MainActivity extends AppCompatActivity {
 
