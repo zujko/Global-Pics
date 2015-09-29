@@ -6,25 +6,56 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.event.EventBus;
 import me.zujko.globalpics.R;
+import me.zujko.globalpics.adapters.PhotoAdapter;
+import me.zujko.globalpics.events.PhotoLoadEvent;
+import me.zujko.globalpics.models.Photo;
 
 public class MainActivity extends AppCompatActivity {
 
     private LocationManager mLocationManager;
+    private RecyclerView recyclerView;
+    private static List<Photo> photoList;
+    private PhotoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        photoList = new ArrayList<Photo>();
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             createNoGpsAlert();
         }
+
+        recyclerView = (RecyclerView) findViewById(R.id.photo_recyclerview);
+
+        adapter = new PhotoAdapter(photoList, getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -74,5 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog mNoGpsAlertDialog = builder.create();
         mNoGpsAlertDialog.show();
+    }
+
+    public void onEventMainThread(PhotoLoadEvent event) {
+        photoList.addAll(event.photoList);
+        adapter.notifyDataSetChanged();
     }
 }

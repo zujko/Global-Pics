@@ -5,7 +5,9 @@ import android.util.Log;
 import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.Params;
 
+import de.greenrobot.event.EventBus;
 import me.zujko.globalpics.GlobalPicsApplication;
+import me.zujko.globalpics.events.PhotoLoadEvent;
 import me.zujko.globalpics.models.PhotoSearch;
 import retrofit.RetrofitError;
 
@@ -36,6 +38,7 @@ public class PhotoSearchJob extends Job {
     public void onRun() throws Throwable {
         try {
             PhotoSearch photoSearch = GlobalPicsApplication.FLICKR_API.getPhotoResults(searchText, latitude, longitude, radius, perPage, page);
+            EventBus.getDefault().post(new PhotoLoadEvent(photoSearch.getPhotoResult().getListOfPhotos()));
         } catch (RetrofitError error) {
             Log.e(TAG,error.toString());
         }
