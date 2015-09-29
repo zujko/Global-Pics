@@ -7,13 +7,23 @@ import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.log.CustomLogger;
 
+import me.zujko.globalpics.network.FlickrApiGenerator;
+import me.zujko.globalpics.network.FlickrApiService;
+
 public class GlobalPicsApplication extends Application {
     public static JobManager jobManager;
+
+    public static FlickrApiService FLICKR_API;
 
     @Override
     public void onCreate() {
         super.onCreate();
         createJobManager();
+        createFlickrApi();
+    }
+
+    private void createFlickrApi() {
+        FLICKR_API = FlickrApiGenerator.createFlickrApi(FlickrApiService.class);
     }
 
     private void createJobManager() {
