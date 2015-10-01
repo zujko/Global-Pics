@@ -6,8 +6,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,11 +27,19 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private static List<Photo> photoList;
     private PhotoAdapter adapter;
+    private Toolbar mToolbar;
+
+    double testLat = 40.754929;
+    double testLong = -73.981934;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Global Pics");
+        //GlobalPicsApplication.getJobManager().addJobInBackground(new PhotoSearchJob("flower",testLat,testLong,5,40,1));
         photoList = new ArrayList<Photo>();
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -43,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new PhotoAdapter(photoList, getApplicationContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
     }
 
     @Override
