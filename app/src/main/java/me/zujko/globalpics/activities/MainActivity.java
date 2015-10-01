@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.location_menu_item) {
+            startActivity(new Intent(this,LocationActivity.class));
             return true;
         }
 
