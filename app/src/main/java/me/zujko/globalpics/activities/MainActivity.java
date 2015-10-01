@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Global Pics");
-        //GlobalPicsApplication.getJobManager().addJobInBackground(new PhotoSearchJob("flower",testLat,testLong,5,40,1));
+        //GlobalPicsApplication.getJobManager().addJobInBackground(new PhotoSearchJob("flower", testLat, testLong, 5, 40, 1));
         photoList = new ArrayList<Photo>();
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
