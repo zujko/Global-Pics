@@ -8,20 +8,5 @@
         android:id="@+id/photo_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"/>
-    <FrameLayout
-        android:id="@+id/author_text_framelayout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@id/photo_imageview"
-        android:background="@color/black">
-        <TextView
-            android:id="@+id/author_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/photo_imageview"
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/white"/>
-    </FrameLayout>
+        android:adjustViewBounds="true" />
 </RelativeLayout>
